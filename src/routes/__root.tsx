@@ -7,7 +7,6 @@ import {
 import type { QueryClient } from "@tanstack/react-query";
 import appCss from "@/styles.css?url";
 
-import ConvexProvider from "@/integrations/convex/provider";
 import { Devtools } from "@/lib/devtools";
 
 interface MyRouterContext {
@@ -33,10 +32,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ConvexProvider>
-          {children}
-          <Devtools />
-        </ConvexProvider>
+        {children}
+        <Devtools />
         <Scripts />
       </body>
     </html>

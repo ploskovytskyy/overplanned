@@ -1,12 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useAuthActions } from "@convex-dev/auth/react";
-import {
-  AuthLoading,
-  Authenticated,
-  Unauthenticated,
-  useQuery,
-} from "convex/react";
-import { api } from "convex/_generated/api";
+import { Link, createFileRoute } from "@tanstack/react-router";
+
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -14,27 +8,12 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const user = useQuery(api.users.currentUser);
-  const { signIn, signOut } = useAuthActions();
-
   return (
-    <>
+    <section className="container py-10">
       <h1>Overplanned App</h1>
-
-      <AuthLoading>
-        <p>Loading...</p>
-      </AuthLoading>
-
-      <Authenticated>
-        <p>Welcome! {user?.name}</p>
-        <button onClick={() => void signOut()}>Sign out</button>
-      </Authenticated>
-
-      <Unauthenticated>
-        <button onClick={() => void signIn("github")}>
-          Sign in with GitHub
-        </button>
-      </Unauthenticated>
-    </>
+      <Button asChild>
+        <Link to="/trips">Go to my trips</Link>
+      </Button>
+    </section>
   );
 }
