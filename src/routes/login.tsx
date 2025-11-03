@@ -18,7 +18,7 @@ function RouteComponent() {
   }
 
   return (
-    <div className="container py-10">
+    <div className="container grid min-h-[calc(100vh-65px)] place-content-center">
       <Button disabled={isLoading} onClick={() => signIn("github")}>
         Sign in with GitHub
       </Button>

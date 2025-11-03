@@ -1,6 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
-
-import { Button } from "@/components/ui/button";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -9,11 +7,8 @@ export const Route = createFileRoute("/")({
 
 function App() {
   return (
-    <section className="container py-10">
-      <h1>Overplanned App</h1>
-      <Button asChild>
-        <Link to="/trips">Go to my trips</Link>
-      </Button>
+    <section className="container">
+      <h1>Home page</h1>
     </section>
   );
 }
