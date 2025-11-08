@@ -5,6 +5,7 @@ import { v } from "convex/values";
 
 export default defineSchema({
   ...authTables,
+
   trips: defineTable({
     name: v.string(),
     startDate: v.string(),
@@ -13,6 +14,11 @@ export default defineSchema({
     maxPeople: v.number(),
     currency: v.string(),
   }),
+
+  tripToUser: defineTable({
+    trip: v.id("trips"),
+    user: v.id("users"),
+  }).index("by_user", ["user"]),
   tripItems: defineTable({
     trip: v.id("trips"),
     title: v.string(),
@@ -30,5 +36,5 @@ export default defineSchema({
       v.literal("sightseeing"),
       v.literal("food"),
     ),
-  }),
+  }).index("by_trip", ["trip"]),
 });

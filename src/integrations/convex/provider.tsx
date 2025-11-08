@@ -10,9 +10,7 @@ if (!CONVEX_URL) {
 
 export function getContext() {
   const convexQueryClient = new ConvexQueryClient(CONVEX_URL);
-  return {
-    convexClient: convexQueryClient.convexClient,
-  };
+  return convexQueryClient;
 }
 
 export function Provider({

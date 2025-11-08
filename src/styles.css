@@ -229,6 +229,8 @@ code {
   --shadow-blur: var(--shadow-blur);
   --shadow-opacity: var(--shadow-opacity);
   --color-shadow-color: var(--shadow-color);
+
+  --spacing-page: calc(100vh - 65px);
 }
 
 @layer base {

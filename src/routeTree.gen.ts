@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthedTripsRouteImport } from './routes/_authed/trips'
+import { Route as AuthedCreateRouteImport } from './routes/_authed/create'
+import { Route as AuthedTripsIndexRouteImport } from './routes/_authed/trips/index'
+import { Route as AuthedTripsTripIdRouteImport } from './routes/_authed/trips/$tripId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -28,35 +30,58 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthedTripsRoute = AuthedTripsRouteImport.update({
-  id: '/trips',
-  path: '/trips',
+const AuthedCreateRoute = AuthedCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedTripsIndexRoute = AuthedTripsIndexRouteImport.update({
+  id: '/trips/',
+  path: '/trips/',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedTripsTripIdRoute = AuthedTripsTripIdRouteImport.update({
+  id: '/trips/$tripId',
+  path: '/trips/$tripId',
   getParentRoute: () => AuthedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/trips': typeof AuthedTripsRoute
+  '/create': typeof AuthedCreateRoute
+  '/trips/$tripId': typeof AuthedTripsTripIdRoute
+  '/trips': typeof AuthedTripsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/trips': typeof AuthedTripsRoute
+  '/create': typeof AuthedCreateRoute
+  '/trips/$tripId': typeof AuthedTripsTripIdRoute
+  '/trips': typeof AuthedTripsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
-  '/_authed/trips': typeof AuthedTripsRoute
+  '/_authed/create': typeof AuthedCreateRoute
+  '/_authed/trips/$tripId': typeof AuthedTripsTripIdRoute
+  '/_authed/trips/': typeof AuthedTripsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/trips'
+  fullPaths: '/' | '/login' | '/create' | '/trips/$tripId' | '/trips'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/trips'
-  id: '__root__' | '/' | '/_authed' | '/login' | '/_authed/trips'
+  to: '/' | '/login' | '/create' | '/trips/$tripId' | '/trips'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authed'
+    | '/login'
+    | '/_authed/create'
+    | '/_authed/trips/$tripId'
+    | '/_authed/trips/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -88,22 +113,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authed/trips': {
-      id: '/_authed/trips'
+    '/_authed/create': {
+      id: '/_authed/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof AuthedCreateRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/trips/': {
+      id: '/_authed/trips/'
       path: '/trips'
       fullPath: '/trips'
-      preLoaderRoute: typeof AuthedTripsRouteImport
+      preLoaderRoute: typeof AuthedTripsIndexRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/trips/$tripId': {
+      id: '/_authed/trips/$tripId'
+      path: '/trips/$tripId'
+      fullPath: '/trips/$tripId'
+      preLoaderRoute: typeof AuthedTripsTripIdRouteImport
       parentRoute: typeof AuthedRoute
     }
   }
 }
 
 interface AuthedRouteChildren {
-  AuthedTripsRoute: typeof AuthedTripsRoute
+  AuthedCreateRoute: typeof AuthedCreateRoute
+  AuthedTripsTripIdRoute: typeof AuthedTripsTripIdRoute
+  AuthedTripsIndexRoute: typeof AuthedTripsIndexRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
-  AuthedTripsRoute: AuthedTripsRoute,
+  AuthedCreateRoute: AuthedCreateRoute,
+  AuthedTripsTripIdRoute: AuthedTripsTripIdRoute,
+  AuthedTripsIndexRoute: AuthedTripsIndexRoute,
 }
 
 const AuthedRouteWithChildren =

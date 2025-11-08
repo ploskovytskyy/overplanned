@@ -10,6 +10,7 @@ import appCss from "@/styles.css?url";
 
 import { Devtools } from "@/lib/devtools";
 import { SignIn } from "@/components/sign-in";
+import { Toaster } from "@/components/ui/sonner";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -34,7 +35,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <header className="border-b">
+        <header className="border-b sticky top-0 bg-background z-10">
           <div className="h-16 container grid grid-cols-3 items-center">
             <span className="font-bold text-lg justify-self-start">
               overplanned
@@ -52,9 +53,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </header>
-        <main className="py-4">{children}</main>
+        <main>{children}</main>
         <Devtools />
         <Scripts />
+        <Toaster />
       </body>
     </html>
   );
