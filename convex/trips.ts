@@ -1,18 +1,17 @@
-import { getAuthUserId } from "@convex-dev/auth/server";
 import { v } from "convex/values";
+
 import { mutation, query } from "./_generated/server";
+import { ensureUserTrip } from "./_helpers/ensureUserTrip";
+import { tripsModel } from "./_models/trips";
+import { ensureUserId } from "./_helpers/ensureUserId";
 
 export const myTrips = query({
   handler: async (ctx) => {
-    const userId = await getAuthUserId(ctx);
-
-    if (!userId) {
-      throw new Error("User not authenticated");
-    }
+    const user = await ensureUserId(ctx);
 
     const userTrips = await ctx.db
       .query("tripToUser")
-      .withIndex("by_user", (q) => q.eq("user", userId))
+      .withIndex("by_user", (q) => q.eq("user", user))
       .collect();
 
     const tripsWithDetails = await Promise.all(
@@ -25,18 +24,14 @@ export const myTrips = query({
 
 export const createTrip = mutation({
   args: {
-    name: v.string(),
-    startDate: v.string(),
-    endDate: v.string(),
-    minPeople: v.number(),
-    maxPeople: v.number(),
+    name: tripsModel.fields.name,
+    startDate: tripsModel.fields.startDate,
+    endDate: tripsModel.fields.endDate,
+    minPeople: tripsModel.fields.minPeople,
+    maxPeople: tripsModel.fields.maxPeople,
   },
   handler: async (ctx, args) => {
-    const user = await getAuthUserId(ctx);
-
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
+    const user = await ensureUserId(ctx);
 
     const trip = await ctx.db.insert("trips", {
       name: args.name,
@@ -56,28 +51,13 @@ export const createTrip = mutation({
 export const getTripById = query({
   args: { tripId: v.string() },
   handler: async (ctx, args) => {
-    const user = await getAuthUserId(ctx);
+    const trip = await ensureUserTrip(ctx, args.tripId);
 
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
+    const tripItems = await ctx.db
+      .query("tripItems")
+      .withIndex("by_trip", (q) => q.eq("trip", trip._id))
+      .collect();
 
-    const userTrip = await ctx.db
-      .query("tripToUser")
-      .withIndex("by_user", (q) => q.eq("user", user))
-      .filter((q) => q.eq(q.field("trip"), args.tripId))
-      .first();
-
-    if (!userTrip) {
-      throw new Error("Trip not found for user");
-    }
-
-    const trip = await ctx.db.get(userTrip.trip);
-
-    if (!trip) {
-      throw new Error("Trip not found by id");
-    }
-
-    return trip;
+    return { ...trip, items: tripItems };
   },
 });
