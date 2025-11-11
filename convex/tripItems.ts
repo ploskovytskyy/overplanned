@@ -6,19 +6,23 @@ import { tripItemsModel } from "./_models/tripItems";
 
 export const createTripItem = mutation({
   args: {
-    tripId: v.id("trips"),
+    tripId: v.string(),
     payload: v.object({
       title: tripItemsModel.fields.title,
+      startDate: tripItemsModel.fields.startDate,
+      endDate: tripItemsModel.fields.endDate,
+      type: tripItemsModel.fields.type,
     }),
   },
   handler: async (ctx, args) => {
     const trip = await ensureUserTrip(ctx, args.tripId);
 
-    // const tripItem = await ctx.db.insert("tripItems", {
-    //   trip: trip._id,
-    //   title: args.payload.title,
-    // });
-
-    // return tripItem.id;
+    await ctx.db.insert("tripItems", {
+      trip: trip._id,
+      title: args.payload.title,
+      startDate: args.payload.startDate,
+      endDate: args.payload.endDate,
+      type: args.payload.type,
+    });
   },
 });

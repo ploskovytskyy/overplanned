@@ -1,7 +1,7 @@
 import { Image } from "@unpic/react";
 import { useState } from "react";
 
-import { typeGroups } from "@/modules/trips/utils/trip-type-utils";
+import { typeGroups } from "@/modules/trip-details/utils/trip-type-utils";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Label } from "@/components/ui/label";
 

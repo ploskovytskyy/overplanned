@@ -5,12 +5,15 @@ import {
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 
+import { Image } from "@unpic/react";
 import type { QueryClient } from "@tanstack/react-query";
 import appCss from "@/styles.css?url";
 
 import { Devtools } from "@/lib/devtools";
 import { SignIn } from "@/components/sign-in";
 import { Toaster } from "@/components/ui/sonner";
+
+import logoImage from "@/assets/overplanned.png";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -37,9 +40,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <header className="border-b sticky top-0 bg-background z-10">
           <div className="h-16 container grid grid-cols-3 items-center">
-            <span className="font-bold text-lg justify-self-start">
-              overplanned
-            </span>
+            <div className="flex items-center gap-4">
+              <Image
+                src={logoImage}
+                width={50}
+                height={50}
+                className="mix-blend-darken scale-125"
+              />
+              <span className="font-bold text-lg justify-self-start">
+                overplanned
+              </span>
+            </div>
             <nav className="flex justify-self-center items-center gap-10">
               <Link to="/" activeProps={{ className: "underline" }}>
                 Home

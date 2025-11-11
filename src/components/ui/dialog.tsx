@@ -4,7 +4,6 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
-import { ScrollArea } from "./scroll-area";
 import { cn } from "@/lib/utils";
 
 function Dialog({
@@ -58,18 +57,16 @@ function DialogContent({
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
-      <DialogPrimitive.Content
-        data-slot="dialog-content"
-        className={cn(
-          "overflow-auto grid px-4 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed inset-0 z-50 w-screen duration-200",
-        )}
-        {...props}
-      >
-        <div
+      <div className="fixed z-50 inset-0 grid px-4">
+        <DialogPrimitive.Content
+          data-slot="dialog-content"
           className={cn(
             "relative self-center w-full mx-auto bg-background my-6 shadow-lg max-w-full gap-4 rounded-lg border p-6 sm:max-w-lg",
+            "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 duration-200",
+            "max-h-[calc(100vh-32px)] overflow-auto",
             className,
           )}
+          {...props}
         >
           {children}
           {showCloseButton && (
@@ -81,8 +78,8 @@ function DialogContent({
               <span className="sr-only">Close</span>
             </DialogPrimitive.Close>
           )}
-        </div>
-      </DialogPrimitive.Content>
+        </DialogPrimitive.Content>
+      </div>
     </DialogPortal>
   );
 }

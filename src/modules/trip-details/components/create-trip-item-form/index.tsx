@@ -1,10 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import { Check } from "lucide-react";
-import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
-import { useConvexMutation } from "@convex-dev/react-query";
-import { api } from "convex/_generated/api";
-import { toast } from "sonner";
+import { useCreateTripItem } from "../../hooks/use-create-trip-item";
+import { createTripItemFormSchema } from "../../utils/schema";
 import { TypeToggleGroup } from "./type-toggle-group";
 import { Title } from "./title";
 import { Time } from "./time";
@@ -14,41 +11,14 @@ import { Separator } from "@/components/ui/separator";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-const formSchema = z.object({
-  type: z.string(),
-  title: z.string().min(3, {
-    error: "Title must be at least 3 characters long",
-  }),
-  time: z
-    .object({
-      startTime: z.string(),
-      endTime: z.string(),
-    })
-    .refine(
-      (data) => {
-        if (data.startTime === data.endTime) return true;
-
-        const startTime = new Date(`2025-01-01T${data.startTime}:00`);
-        const endTime = new Date(`2025-01-01T${data.endTime}:00`);
-
-        return startTime < endTime;
-      },
-      {
-        error: "End time must be later than start time",
-      },
-    ),
-  url: z.string(),
-});
-
-export default function CreateTripItemForm() {
-  const { mutateAsync: createTrip, isPending: isCreating } = useMutation({
-    mutationFn: useConvexMutation(api.tripItems.createTripItem),
-    onError: (error) => {
-      toast.error("Could not create trip item!", {
-        description: error.message,
-      });
-    },
-  });
+export default function CreateTripItemForm({
+  day,
+  onCreate,
+}: {
+  day: string;
+  onCreate: () => void;
+}) {
+  const { createTrip, isCreating } = useCreateTripItem({ onCreate });
 
   const form = useForm({
     defaultValues: {
@@ -60,9 +30,9 @@ export default function CreateTripItemForm() {
       },
       url: "",
     },
-    validators: { onSubmit: formSchema },
+    validators: { onSubmit: createTripItemFormSchema },
     onSubmit: ({ value }) => {
-      console.log("Submit", value);
+      createTrip({ payload: value, day });
     },
   });
 

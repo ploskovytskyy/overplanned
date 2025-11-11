@@ -7,6 +7,7 @@ import { api } from "convex/_generated/api";
 import { toast } from "sonner";
 import { useConvexMutation } from "@convex-dev/react-query";
 import { useMutation } from "@tanstack/react-query";
+import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { Field, FieldLabel } from "@/components/ui/field";
 import {
@@ -19,6 +20,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { formatDayKey } from "@/modules/trip-details/utils/date-utils";
 
 export const Route = createFileRoute("/_authed/create")({
   component: RouteComponent,
@@ -81,8 +83,8 @@ function RouteComponent() {
     const maxPeople =
       typeof people === "string" ? Number(people) : Number(people.max);
 
-    const startDate = date.from.toISOString();
-    const endDate = date.to.toISOString();
+    const startDate = formatDayKey(date.from);
+    const endDate = formatDayKey(date.to);
 
     const res = await createTrip({
       name,

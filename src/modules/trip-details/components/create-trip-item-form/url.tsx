@@ -28,7 +28,7 @@ export const Url = ({
         </InputGroupAddon>
       </InputGroup>
       <FieldDescription>
-        Add a link for a quick access to the item card
+        Add a link for a quick access on the item card
       </FieldDescription>
     </Field>
   );
