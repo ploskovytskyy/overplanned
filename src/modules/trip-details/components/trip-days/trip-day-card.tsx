@@ -60,12 +60,11 @@ export const TripDayCard = ({
       </div>
 
       <div
-        className={cn(
-          "relative grid empty:hidden gap-4 mb-3 transition-transform",
-          {
-            "scale-[0.99]": isOverNewDay,
-          },
-        )}
+        className={cn("relative grid gap-4 transition-transform", {
+          "scale-[0.99] outline outline-green-800 rounded overflow-hidden":
+            isOverNewDay,
+          "mb-3": !!items.length,
+        })}
       >
         {items.map((item) => (
           <TripDayItem key={item._id} day={dayKey} item={item} />
@@ -74,13 +73,13 @@ export const TripDayCard = ({
         <div
           className={cn(
             "absolute inset-0 grid place-content-center transition-opacity",
-            "bg-background/70 invisible opacity-0",
+            "bg-green-50/80 invisible opacity-0",
             {
               "visible opacity-100": isOverNewDay,
             },
           )}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 font-semibold">
             <ArrowDownFromLine className="size-4" />
             Move here
           </div>

@@ -23,7 +23,10 @@ export const Time = ({
   onChange?: (value: TimeValue) => void;
   errors?: Array<{ message?: string } | undefined>;
 }) => {
-  const [includeEndTime, setIncludeEndTime] = useState(false);
+  const [includeEndTime, setIncludeEndTime] = useState(
+    !!value.endTime && value.startTime !== value.endTime,
+  );
+
   const endTimeInputRef = useRef<HTMLInputElement>(null);
 
   const handleToggleEndTime = (checked: boolean) => {

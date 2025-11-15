@@ -1,4 +1,5 @@
 import { DndContext } from "@dnd-kit/core";
+import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { useDaysWithItems } from "../../hooks/use-days-with-items";
 import { useUpdateItemDayOnDragEnd } from "../../hooks/use-update-item-day-on-drag-end";
 import { TripDayCard } from "./trip-day-card";
@@ -10,7 +11,10 @@ export const TripDays = () => {
   if (!days) return null;
 
   return (
-    <DndContext onDragEnd={updateDayForItemOnDragEnd}>
+    <DndContext
+      onDragEnd={updateDayForItemOnDragEnd}
+      modifiers={[restrictToFirstScrollableAncestor]}
+    >
       <div className="grid gap-4">
         {days.map(({ day, isOutside, items }, index) => (
           <TripDayCard

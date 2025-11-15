@@ -1,10 +1,9 @@
-import { ExternalLink, GripVertical, MoreHorizontalIcon } from "lucide-react";
+import { GripVertical } from "lucide-react";
 import { useDraggable } from "@dnd-kit/core";
 import { TripItemIcon } from "../trip-item-icon";
 import { formatDayItemTime, formatDuration } from "../../utils/date-utils";
+import { TripDayItemActions } from "./trip-day-item-actions";
 import type { TripItem } from "../../hooks/use-days-with-items";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Button } from "@/components/ui/button";
 
 export const TripDayItem = ({ item, day }: { item: TripItem; day: string }) => {
   const { attributes, listeners, setNodeRef, transform, setActivatorNodeRef } =
@@ -48,14 +47,7 @@ export const TripDayItem = ({ item, day }: { item: TripItem; day: string }) => {
         <span className="font-medium text-sm">{item.title}</span>
       </div>
 
-      <ButtonGroup className="ml-auto">
-        <Button variant="outline" size="sm">
-          <ExternalLink />
-        </Button>
-        <Button variant="outline" size="icon-sm" aria-label="More Options">
-          <MoreHorizontalIcon />
-        </Button>
-      </ButtonGroup>
+      <TripDayItemActions itemData={item} />
     </div>
   );
 };

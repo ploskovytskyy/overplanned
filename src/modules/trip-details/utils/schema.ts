@@ -27,3 +27,11 @@ export const createTripItemFormSchema = z.object({
 });
 
 export type CreateTripItemFormSchema = z.infer<typeof createTripItemFormSchema>;
+
+export const updateTripItemFormSchema = createTripItemFormSchema.pick({
+  title: true,
+  time: true,
+  url: true,
+});
+
+export type UpdateTripItemFormSchema = z.infer<typeof updateTripItemFormSchema>;

@@ -19,7 +19,7 @@ export const Url = ({
       <InputGroup>
         <InputGroupInput
           id="title"
-          placeholder="Trip item title"
+          placeholder="https://maps.google.com"
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />

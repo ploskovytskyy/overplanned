@@ -12,6 +12,7 @@ export const createTripItem = mutation({
       startDate: tripItemsModel.fields.startDate,
       endDate: tripItemsModel.fields.endDate,
       type: tripItemsModel.fields.type,
+      url: tripItemsModel.fields.url,
     }),
   },
   handler: async (ctx, args) => {
@@ -23,6 +24,7 @@ export const createTripItem = mutation({
       startDate: args.payload.startDate,
       endDate: args.payload.endDate,
       type: args.payload.type,
+      url: args.payload.url,
     });
   },
 });
@@ -50,6 +52,39 @@ export const updateTripItemDay = mutation({
     await ctx.db.patch(tripItem._id, {
       startDate: args.newStartTime,
       endDate: args.newEndTime,
+    });
+  },
+});
+
+export const updateTripItem = mutation({
+  args: {
+    tripId: v.string(),
+    tripItemId: v.string(),
+    payload: v.object({
+      title: tripItemsModel.fields.title,
+      startDate: tripItemsModel.fields.startDate,
+      endDate: tripItemsModel.fields.endDate,
+      url: tripItemsModel.fields.url,
+    }),
+  },
+  handler: async (ctx, args) => {
+    const trip = await ensureUserTrip(ctx, args.tripId);
+
+    const tripItem = await ctx.db
+      .query("tripItems")
+      .withIndex("by_trip", (q) => q.eq("trip", trip._id))
+      .filter((q) => q.eq(q.field("_id"), args.tripItemId))
+      .unique();
+
+    if (!tripItem) {
+      throw new Error("Trip item not found");
+    }
+
+    await ctx.db.patch(tripItem._id, {
+      title: args.payload.title,
+      startDate: args.payload.startDate,
+      endDate: args.payload.endDate,
+      url: args.payload.url,
     });
   },
 });

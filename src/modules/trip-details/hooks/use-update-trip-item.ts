@@ -4,28 +4,29 @@ import { api } from "convex/_generated/api";
 import { toast } from "sonner";
 import { useParams } from "@tanstack/react-router";
 import { format, setHours, setMinutes } from "date-fns";
-import type { TripType } from "../utils/trip-type-utils";
-import type { CreateTripItemFormSchema } from "../utils/schema";
+import type { UpdateTripItemFormSchema } from "../utils/schema";
 
-export const useCreateTripItem = ({ onCreate }: { onCreate: () => void }) => {
+export const useUpdateTripItem = ({ onUpdate }: { onUpdate: () => void }) => {
   const { tripId } = useParams({ from: "/_authed/trips/$tripId" });
 
-  const { mutate, isPending: isCreating } = useMutation({
-    mutationFn: useConvexMutation(api.tripItems.createTripItem),
+  const { mutate, isPending: isUpdating } = useMutation({
+    mutationFn: useConvexMutation(api.tripItems.updateTripItem),
     onError: (error) => {
-      toast.error("Could not create trip item!", {
+      toast.error("Could not update trip item!", {
         description: error.message,
       });
     },
-    onSuccess: onCreate,
+    onSuccess: onUpdate,
   });
 
-  const createTrip = ({
+  const updateTripItem = ({
     payload,
     day,
+    tripItemId,
   }: {
-    payload: CreateTripItemFormSchema;
+    payload: UpdateTripItemFormSchema;
     day: string;
+    tripItemId: string;
   }) => {
     const [startHours, startMinutes] = payload.time.startTime.split(":");
     const [endHours, endMinutes] = payload.time.endTime.split(":");
@@ -42,18 +43,18 @@ export const useCreateTripItem = ({ onCreate }: { onCreate: () => void }) => {
 
     mutate({
       tripId,
+      tripItemId,
       payload: {
         title: payload.title,
         startDate,
         endDate,
-        type: payload.type as TripType,
         url: payload.url,
       },
     });
   };
 
   return {
-    createTrip,
-    isCreating,
+    updateTripItem,
+    isUpdating,
   };
 };

@@ -17,4 +17,5 @@ export const tripItemsModel = v.object({
     v.literal("sightseeing"),
     v.literal("food"),
   ),
+  url: v.optional(v.string()),
 });
