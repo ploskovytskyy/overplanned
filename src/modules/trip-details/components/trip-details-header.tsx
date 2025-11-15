@@ -1,4 +1,4 @@
-import { Calendar, Users } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { useTripData } from "../hooks/use-trip-data";
 import { formatDateShort } from "../utils/date-utils";
 
@@ -12,10 +12,10 @@ export const TripDetailsHeader = () => {
       ? formatDateShort(data.startDate)
       : `${formatDateShort(data.startDate)} - ${formatDateShort(data.endDate)}`;
 
-  const amountOfPeople =
-    data.minPeople === data.maxPeople
-      ? data.minPeople
-      : `${data.minPeople}-${data.maxPeople} people`;
+  // const amountOfPeople =
+  //   data.minPeople === data.maxPeople
+  //     ? data.minPeople
+  //     : `${data.minPeople}-${data.maxPeople} people`;
 
   return (
     <div className="grid mb-8">
@@ -25,10 +25,10 @@ export const TripDetailsHeader = () => {
           <Calendar className="size-5" />
           {dateLabel}
         </span>
-        <span className="flex items-center gap-2">
+        {/* <span className="flex items-center gap-2">
           <Users className="size-5" />
           {amountOfPeople}
-        </span>
+        </span>*/}
       </div>
     </div>
   );

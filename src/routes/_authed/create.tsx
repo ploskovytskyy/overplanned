@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-import { ArrowLeft, ArrowRight, Check, User, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useState } from "react";
 
 import { api } from "convex/_generated/api";
@@ -17,15 +17,15 @@ import {
 
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Label } from "@/components/ui/label";
 import { formatDayKey } from "@/modules/trip-details/utils/date-utils";
 
 export const Route = createFileRoute("/_authed/create")({
   component: RouteComponent,
 });
 
-type Step = "name" | "people" | "date";
+type Step = "name" | "date";
 
 const descriptions = {
   name: "Create a memorable name, make sure it feels good...",
@@ -45,50 +45,50 @@ function RouteComponent() {
 
   const [step, setStep] = useState<Step>("name");
   const [name, setName] = useState("");
-  const [people, setPeople] = useState<string | { min: string; max: string }>(
-    "",
-  );
+  // const [people, setPeople] = useState<string | { min: string; max: string }>(
+  //   "",
+  // );
   const [date, setDate] = useState<DateRange | undefined>(undefined);
 
-  const togglePeopleValueType = () => {
-    if (typeof people === "string") {
-      setPeople({ min: people, max: people });
-    } else {
-      setPeople(people.min);
-    }
-  };
+  // const togglePeopleValueType = () => {
+  //   if (typeof people === "string") {
+  //     setPeople({ min: people, max: people });
+  //   } else {
+  //     setPeople(people.min);
+  //   }
+  // };
 
-  const isPeopleFieldValid = (() => {
-    if (typeof people === "string") {
-      return Number(people) > 0;
-    } else {
-      const min = Number(people.min);
-      const max = Number(people.max);
-      return min > 0 && max > min;
-    }
-  })();
+  // const isPeopleFieldValid = (() => {
+  //   if (typeof people === "string") {
+  //     return Number(people) > 0;
+  //   } else {
+  //     const min = Number(people.min);
+  //     const max = Number(people.max);
+  //     return min > 0 && max > min;
+  //   }
+  // })();
 
   const isDateValid = !!date && date.from && date.to;
 
   const handleCreateTrip = async () => {
-    if (!name || !isPeopleFieldValid || !date?.from || !date.to) {
+    if (!name || !date?.from || !date.to) {
       toast.error("Failed to create a trip, data is invalid");
       return;
     }
 
-    const minPeople =
-      typeof people === "string" ? Number(people) : Number(people.min);
+    // const minPeople =
+    //   typeof people === "string" ? Number(people) : Number(people.min);
 
-    const maxPeople =
-      typeof people === "string" ? Number(people) : Number(people.max);
+    // const maxPeople =
+    //   typeof people === "string" ? Number(people) : Number(people.max);
 
     const startDate = formatDayKey(date.from);
     const endDate = formatDayKey(date.to);
 
     const res = await createTrip({
       name,
-      minPeople,
-      maxPeople,
+      // minPeople,
+      // maxPeople,
       startDate,
       endDate,
     });
@@ -122,13 +122,13 @@ function RouteComponent() {
           </Field>
 
           <div className="flex justify-end">
-            <Button disabled={!name} onClick={() => setStep("people")}>
+            <Button disabled={!name} onClick={() => setStep("date")}>
               Next <ArrowRight />
             </Button>
           </div>
         </>
       )}
-
+      {/*
       {step === "people" && (
         <>
           <Field className="mb-4">
@@ -200,7 +200,7 @@ function RouteComponent() {
             </Button>
           </div>
         </>
-      )}
+      )}*/}
 
       {step === "date" && (
         <>
@@ -216,9 +216,9 @@ function RouteComponent() {
             <Button
               disabled={isCreating}
               variant="ghost"
-              onClick={() => setStep("people")}
+              onClick={() => setStep("name")}
             >
-              <ArrowLeft /> Back to people
+              <ArrowLeft /> Back to name
             </Button>
             <Button
               disabled={!isDateValid || isCreating}

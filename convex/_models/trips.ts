@@ -4,8 +4,8 @@ export const tripsModel = v.object({
   name: v.string(),
   startDate: v.string(),
   endDate: v.string(),
-  minPeople: v.number(),
-  maxPeople: v.number(),
+  minPeople: v.optional(v.number()),
+  maxPeople: v.optional(v.number()),
   currency: v.string(),
 });
 

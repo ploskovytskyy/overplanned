@@ -27,8 +27,8 @@ export const createTrip = mutation({
     name: tripsModel.fields.name,
     startDate: tripsModel.fields.startDate,
     endDate: tripsModel.fields.endDate,
-    minPeople: tripsModel.fields.minPeople,
-    maxPeople: tripsModel.fields.maxPeople,
+    // minPeople: tripsModel.fields.minPeople,
+    // maxPeople: tripsModel.fields.maxPeople,
   },
   handler: async (ctx, args) => {
     const user = await ensureUserId(ctx);
@@ -37,8 +37,8 @@ export const createTrip = mutation({
       name: args.name,
       startDate: args.startDate,
       endDate: args.endDate,
-      minPeople: args.minPeople,
-      maxPeople: args.maxPeople,
+      // minPeople: args.minPeople,
+      // maxPeople: args.maxPeople,
       currency: "USD",
     });
 
