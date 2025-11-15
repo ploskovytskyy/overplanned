@@ -9,6 +9,7 @@ import accomidationImage from "@/assets/door-3.png";
 import checkInImage from "@/assets/check-in.png";
 import checkOutImage from "@/assets/check-out.png";
 
+import starImage from "@/assets/star.png";
 import activityImage from "@/assets/activity-2.png";
 import sightseeingImage from "@/assets/sightseeing.png";
 import foodImage from "@/assets/food.png";
@@ -34,7 +35,7 @@ export const typeGroups: Record<
     thumbnail: activityImage,
     types: {
       ["activity"]: {
-        icon: activityImage,
+        icon: starImage,
         label: "Default",
       },
       ["sightseeing"]: {

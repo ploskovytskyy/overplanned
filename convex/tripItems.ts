@@ -88,3 +88,25 @@ export const updateTripItem = mutation({
     });
   },
 });
+
+export const removeTripItem = mutation({
+  args: {
+    tripId: v.string(),
+    tripItemId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const trip = await ensureUserTrip(ctx, args.tripId);
+
+    const tripItem = await ctx.db
+      .query("tripItems")
+      .withIndex("by_trip", (q) => q.eq("trip", trip._id))
+      .filter((q) => q.eq(q.field("_id"), args.tripItemId))
+      .unique();
+
+    if (!tripItem) {
+      throw new Error("Trip item not found");
+    }
+
+    await ctx.db.delete(tripItem._id);
+  },
+});

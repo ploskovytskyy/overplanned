@@ -1,4 +1,5 @@
 import { useOpenTripItemRemoveAlert } from "../hooks/use-open-trip-item-remove-alert";
+import { useRemoveTripItem } from "../hooks/use-remove-trip-item";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,9 +14,9 @@ import {
 export const TripDayItemRemoveAlert = () => {
   const { tripItemId, closeTripItemRemoveAlert } = useOpenTripItemRemoveAlert();
 
-  const handleRemoveTripItem = () => {
-    console.log("Remove trip item with ID:", tripItemId);
-  };
+  const { removeTripItem, isRemoving } = useRemoveTripItem({
+    onRemove: closeTripItemRemoveAlert,
+  });
 
   return (
     <AlertDialog
@@ -34,8 +35,11 @@ export const TripDayItemRemoveAlert = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleRemoveTripItem}>
+          <AlertDialogCancel disabled={isRemoving}>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            disabled={isRemoving}
+            onClick={() => removeTripItem(tripItemId)}
+          >
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

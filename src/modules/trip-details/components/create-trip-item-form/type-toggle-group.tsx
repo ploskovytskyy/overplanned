@@ -22,7 +22,10 @@ export const TypeToggleGroup = ({
     onTypeChange(Object.keys(typeGroups[value].types)[0]);
   };
 
-  const handleTypeChange = onTypeChange;
+  const handleTypeChange = (value: string) => {
+    if (!value) return;
+    onTypeChange(value);
+  };
 
   return (
     <>
