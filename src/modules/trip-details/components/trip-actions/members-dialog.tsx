@@ -3,6 +3,7 @@ import { api } from "convex/_generated/api";
 import { useParams } from "@tanstack/react-router";
 import { useTripData } from "../../hooks/use-trip-data";
 import { MembersInviteLink } from "./members-invite-link";
+import { MembersRemoveAlert } from "./members-remove-alert";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { UserAvatar } from "@/components/user-avatar";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 
@@ -79,13 +79,10 @@ export const MembersDialog = ({ trigger }: { trigger: React.ReactNode }) => {
                   member.id !== currentUser._id &&
                   member.role !== "owner" && (
                     <>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        className="ml-auto"
-                      >
-                        Remove
-                      </Button>
+                      <MembersRemoveAlert
+                        tripId={tripId}
+                        membershipId={member.membershipId}
+                      />
                     </>
                   )}
               </div>

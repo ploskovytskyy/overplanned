@@ -104,6 +104,7 @@ export const members = query({
       return [
         {
           id: member.user,
+          membershipId: member._id,
           email: user.email,
           name: user.name,
           image: user.image,

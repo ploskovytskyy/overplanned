@@ -110,3 +110,16 @@ export const getInviteData = query({
     };
   },
 });
+
+export const removeMembership = mutation({
+  args: { membershipId: v.id("tripToUser"), tripId: v.string() },
+  handler: async (ctx, args) => {
+    const trip = await ensureUserTrip(ctx, args.tripId);
+
+    if (trip.role !== "owner" && trip.role !== "admin") {
+      throw new Error("Unauthorized");
+    }
+
+    await ctx.db.delete(args.membershipId);
+  },
+});
