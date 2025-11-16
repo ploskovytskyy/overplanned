@@ -1,11 +1,12 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { ConvexError } from "convex/values";
 import type { QueryCtx } from "../_generated/server";
 
 export async function ensureUserTrip(ctx: QueryCtx, tripId: string) {
   const user = await getAuthUserId(ctx);
 
   if (!user) {
-    throw new Error("User not authenticated");
+    throw new ConvexError("Unauthorized");
   }
 
   const userTrip = await ctx.db
@@ -15,13 +16,13 @@ export async function ensureUserTrip(ctx: QueryCtx, tripId: string) {
     .first();
 
   if (!userTrip) {
-    throw new Error("Trip not found for user");
+    throw new ConvexError("Unauthorized");
   }
 
   const trip = await ctx.db.get(userTrip.trip);
 
   if (!trip) {
-    throw new Error("Trip not found by id");
+    throw new ConvexError("NotFound");
   }
 
   return { ...trip, role: userTrip.role };

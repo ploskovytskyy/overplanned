@@ -1,6 +1,8 @@
 import { Navigate, Outlet, createFileRoute } from "@tanstack/react-router";
 import { useConvexAuth } from "convex/react";
+import { ErrorBoundary } from "react-error-boundary";
 import { authMiddleware } from "@/lib/auth-middleware";
+import { ErrorPage } from "@/components/error";
 
 export const Route = createFileRoute("/_authed")({
   server: { middleware: [authMiddleware] },
@@ -14,5 +16,9 @@ function RouteLayout() {
     return <Navigate to="/login" />;
   }
 
-  return <Outlet />;
+  return (
+    <ErrorBoundary fallbackRender={ErrorPage}>
+      <Outlet />
+    </ErrorBoundary>
+  );
 }

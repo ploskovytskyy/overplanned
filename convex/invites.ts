@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { ensureUserTrip } from "./_helpers/ensureUserTrip";
 import { ensureUserId } from "./_helpers/ensureUserId";
@@ -35,7 +35,7 @@ export const acceptInvite = mutation({
     const invite = await ctx.db.get(args.inviteId);
 
     if (!invite || (invite.user && invite.user !== user)) {
-      throw new Error("Invite not found");
+      throw new ConvexError("NotFound");
     }
 
     const userToTrip = await ctx.db
@@ -80,13 +80,13 @@ export const getInviteData = query({
     const invite = await ctx.db.get(args.inviteId);
 
     if (!invite || (invite.user && invite.user !== user)) {
-      throw new Error("Invite not found");
+      throw new ConvexError("NotFound");
     }
 
     const trip = await ctx.db.get(invite.trip);
 
     if (!trip) {
-      throw new Error("Trip not found");
+      throw new ConvexError("NotFound");
     }
 
     const userToTrip = await ctx.db
