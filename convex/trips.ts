@@ -42,7 +42,7 @@ export const createTrip = mutation({
       currency: "USD",
     });
 
-    await ctx.db.insert("tripToUser", { user, trip });
+    await ctx.db.insert("tripToUser", { user, trip, role: "owner" });
 
     return trip;
   },
@@ -59,5 +59,25 @@ export const getTripById = query({
       .collect();
 
     return { ...trip, items: tripItems };
+  },
+});
+
+export const updateTrip = mutation({
+  args: {
+    tripId: v.string(),
+    payload: v.object({
+      name: tripsModel.fields.name,
+      startDate: tripsModel.fields.startDate,
+      endDate: tripsModel.fields.endDate,
+    }),
+  },
+  handler: async (ctx, args) => {
+    const trip = await ensureUserTrip(ctx, args.tripId);
+
+    await ctx.db.patch(trip._id, {
+      name: args.payload.name,
+      startDate: args.payload.startDate,
+      endDate: args.payload.endDate,
+    });
   },
 });

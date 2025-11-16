@@ -24,5 +24,5 @@ export async function ensureUserTrip(ctx: QueryCtx, tripId: string) {
     throw new Error("Trip not found by id");
   }
 
-  return trip;
+  return { ...trip, role: userTrip.role };
 }

@@ -35,3 +35,13 @@ export const updateTripItemFormSchema = createTripItemFormSchema.pick({
 });
 
 export type UpdateTripItemFormSchema = z.infer<typeof updateTripItemFormSchema>;
+
+export const editTripFormSchema = z.object({
+  name: z.string().min(1, { error: "There is no trip without a name!" }),
+  dates: z.object({
+    from: z.date(),
+    to: z.date(),
+  }),
+});
+
+export type EditTripFormSchema = z.infer<typeof editTripFormSchema>;
