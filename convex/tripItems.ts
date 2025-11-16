@@ -110,3 +110,27 @@ export const removeTripItem = mutation({
     await ctx.db.delete(tripItem._id);
   },
 });
+
+export const duplicateTripItem = mutation({
+  args: {
+    tripId: v.string(),
+    tripItemId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const trip = await ensureUserTrip(ctx, args.tripId);
+
+    const tripItem = await ctx.db
+      .query("tripItems")
+      .withIndex("by_trip", (q) => q.eq("trip", trip._id))
+      .filter((q) => q.eq(q.field("_id"), args.tripItemId))
+      .unique();
+
+    if (!tripItem) {
+      throw new Error("Trip item not found");
+    }
+
+    const { _id, _creationTime, ...rest } = tripItem;
+
+    await ctx.db.insert("tripItems", rest);
+  },
+});
