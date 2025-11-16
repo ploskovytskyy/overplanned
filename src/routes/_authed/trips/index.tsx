@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "convex/react";
 import { api } from "convex/_generated/api";
 import { Image } from "@unpic/react";
@@ -31,8 +31,10 @@ function RouteComponent() {
           />
           My Trips
         </h1>
-        <Button variant="outline">
-          <Plus /> Add new trip
+        <Button variant="outline" asChild>
+          <Link to="/create">
+            <Plus /> Add new trip
+          </Link>
         </Button>
       </div>
       <div className="grid gap-5">
