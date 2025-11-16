@@ -81,3 +81,37 @@ export const updateTrip = mutation({
     });
   },
 });
+
+export const members = query({
+  args: { tripId: v.string() },
+  handler: async (ctx, args) => {
+    const trip = await ensureUserTrip(ctx, args.tripId);
+
+    const tripToUsers = await ctx.db
+      .query("tripToUser")
+      .filter((q) => q.eq(q.field("trip"), trip._id))
+      .collect();
+
+    const users = await Promise.all(
+      tripToUsers.map((member) => ctx.db.get(member.user)),
+    );
+
+    const membersData = tripToUsers.flatMap((member) => {
+      const user = users.find((userData) => userData?._id === member.user);
+
+      if (!user) return [];
+
+      return [
+        {
+          id: member.user,
+          email: user.email,
+          name: user.name,
+          image: user.image,
+          role: member.role,
+        },
+      ];
+    });
+
+    return membersData;
+  },
+});
