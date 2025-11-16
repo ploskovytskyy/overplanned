@@ -78,9 +78,15 @@ export const MembersDialog = ({ trigger }: { trigger: React.ReactNode }) => {
                 {canManageMembers &&
                   member.id !== currentUser._id &&
                   member.role !== "owner" && (
-                    <Button variant="destructive" size="sm" className="ml-auto">
-                      Remove
-                    </Button>
+                    <>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="ml-auto"
+                      >
+                        Remove
+                      </Button>
+                    </>
                   )}
               </div>
             ))}

@@ -32,7 +32,7 @@ export const TripDetailsHeader = () => {
       </div>
 
       <div className="flex items-center gap-5 justify-between">
-        <h1 className="text-3xl font-bold ">{data.name}</h1>
+        <h1 className="text-3xl font-bold">{data.name}</h1>
         <TripActions />
       </div>
     </div>

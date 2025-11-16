@@ -20,7 +20,7 @@ export const EmptyTrips = () => {
           creating your first trip.
         </EmptyDescription>
       </EmptyHeader>
-      <EmptyContent>
+      <EmptyContent className="mb-16">
         <div className="flex gap-2">
           <Button asChild>
             <Link to="/create">Create Trip</Link>
