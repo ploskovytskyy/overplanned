@@ -12,9 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthedCreateRouteImport } from './routes/_authed/create'
+import { Route as AuthedCreateRouteImport } from './routes/_authed/invite/$inviteId.tsx'
 import { Route as AuthedTripsIndexRouteImport } from './routes/_authed/trips/index'
 import { Route as AuthedTripsTripIdRouteImport } from './routes/_authed/trips/$tripId'
+import { Route as AuthedInviteInviteIdRouteImport } from './routes/_authed/invite/$inviteId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -45,11 +46,17 @@ const AuthedTripsTripIdRoute = AuthedTripsTripIdRouteImport.update({
   path: '/trips/$tripId',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedInviteInviteIdRoute = AuthedInviteInviteIdRouteImport.update({
+  id: '/invite/$inviteId',
+  path: '/invite/$inviteId',
+  getParentRoute: () => AuthedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/create': typeof AuthedCreateRoute
+  '/invite/$inviteId': typeof AuthedInviteInviteIdRoute
   '/trips/$tripId': typeof AuthedTripsTripIdRoute
   '/trips': typeof AuthedTripsIndexRoute
 }
@@ -57,6 +64,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/create': typeof AuthedCreateRoute
+  '/invite/$inviteId': typeof AuthedInviteInviteIdRoute
   '/trips/$tripId': typeof AuthedTripsTripIdRoute
   '/trips': typeof AuthedTripsIndexRoute
 }
@@ -66,20 +74,34 @@ export interface FileRoutesById {
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authed/create': typeof AuthedCreateRoute
+  '/_authed/invite/$inviteId': typeof AuthedInviteInviteIdRoute
   '/_authed/trips/$tripId': typeof AuthedTripsTripIdRoute
   '/_authed/trips/': typeof AuthedTripsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/create' | '/trips/$tripId' | '/trips'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/create'
+    | '/invite/$inviteId'
+    | '/trips/$tripId'
+    | '/trips'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/create' | '/trips/$tripId' | '/trips'
+  to:
+    | '/'
+    | '/login'
+    | '/create'
+    | '/invite/$inviteId'
+    | '/trips/$tripId'
+    | '/trips'
   id:
     | '__root__'
     | '/'
     | '/_authed'
     | '/login'
     | '/_authed/create'
+    | '/_authed/invite/$inviteId'
     | '/_authed/trips/$tripId'
     | '/_authed/trips/'
   fileRoutesById: FileRoutesById
@@ -134,17 +156,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedTripsTripIdRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/invite/$inviteId': {
+      id: '/_authed/invite/$inviteId'
+      path: '/invite/$inviteId'
+      fullPath: '/invite/$inviteId'
+      preLoaderRoute: typeof AuthedInviteInviteIdRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
 interface AuthedRouteChildren {
   AuthedCreateRoute: typeof AuthedCreateRoute
+  AuthedInviteInviteIdRoute: typeof AuthedInviteInviteIdRoute
   AuthedTripsTripIdRoute: typeof AuthedTripsTripIdRoute
   AuthedTripsIndexRoute: typeof AuthedTripsIndexRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedCreateRoute: AuthedCreateRoute,
+  AuthedInviteInviteIdRoute: AuthedInviteInviteIdRoute,
   AuthedTripsTripIdRoute: AuthedTripsTripIdRoute,
   AuthedTripsIndexRoute: AuthedTripsIndexRoute,
 }

@@ -72,3 +72,41 @@ export const revokeInvite = mutation({
     await ctx.db.delete(args.inviteUrl);
   },
 });
+
+export const getInviteData = query({
+  args: { inviteId: v.id("invites") },
+  handler: async (ctx, args) => {
+    const user = await ensureUserId(ctx);
+    const invite = await ctx.db.get(args.inviteId);
+
+    if (!invite || (invite.user && invite.user !== user)) {
+      throw new Error("Invite not found");
+    }
+
+    const trip = await ctx.db.get(invite.trip);
+
+    if (!trip) {
+      throw new Error("Trip not found");
+    }
+
+    const userToTrip = await ctx.db
+      .query("tripToUser")
+      .withIndex("by_user", (q) => q.eq("user", user))
+      .filter((q) => q.eq(q.field("trip"), invite.trip))
+      .unique();
+
+    if (userToTrip) {
+      return {
+        accepted: true,
+        tripData: trip,
+        inviteData: null,
+      };
+    }
+
+    return {
+      accepted: false,
+      tripData: trip,
+      inviteData: invite,
+    };
+  },
+});
