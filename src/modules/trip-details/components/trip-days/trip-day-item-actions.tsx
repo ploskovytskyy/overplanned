@@ -25,7 +25,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const TripDayItemActions = ({ itemData }: { itemData: TripItem }) => {
+export const TripDayItemActions = ({
+  itemData,
+  disabled,
+}: {
+  itemData: TripItem;
+  disabled?: boolean;
+}) => {
   const { tripId } = useParams({ from: "/_authed/trips/$tripId" });
 
   const openRemoveAlert = useOpenTripItemRemoveAlert(
@@ -73,7 +79,7 @@ export const TripDayItemActions = ({ itemData }: { itemData: TripItem }) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuGroup>
-              <DropdownMenuItem onSelect={handleOpenModal}>
+              <DropdownMenuItem onSelect={handleOpenModal} disabled={disabled}>
                 <Pencil />
                 Edit
               </DropdownMenuItem>
@@ -92,6 +98,7 @@ export const TripDayItemActions = ({ itemData }: { itemData: TripItem }) => {
               <DropdownMenuItem
                 variant="destructive"
                 onSelect={() => openRemoveAlert(itemData._id)}
+                disabled={disabled}
               >
                 <Trash2Icon />
                 Delete

@@ -1,5 +1,6 @@
 import { ConvexError, v } from "convex/values";
 
+import { getRandomColor } from "../src/lib/colors";
 import { mutation, query } from "./_generated/server";
 import { ensureUserTrip } from "./_helpers/ensureUserTrip";
 import { tripsModel } from "./_models/trips";
@@ -42,7 +43,12 @@ export const createTrip = mutation({
       currency: "USD",
     });
 
-    await ctx.db.insert("tripToUser", { user, trip, role: "owner" });
+    await ctx.db.insert("tripToUser", {
+      user,
+      trip,
+      role: "owner",
+      color: getRandomColor(),
+    });
 
     return trip;
   },

@@ -5,6 +5,7 @@ import { formatDayItemTime, formatDuration } from "../../utils/date-utils";
 import { TripDayItemActions } from "./trip-day-item-actions";
 import type { TripItem } from "../../hooks/use-days-with-items";
 import { Highlight } from "@/components/highlight";
+import { cn } from "@/lib/utils";
 
 export const TripDayItem = ({
   item,
@@ -24,6 +25,7 @@ export const TripDayItem = ({
         startDate: item.startDate,
         endDate: item.endDate,
       },
+      disabled: !!highlight,
     });
 
   const style = transform
@@ -47,7 +49,13 @@ export const TripDayItem = ({
     >
       <Highlight data={highlight} />
 
-      <span ref={setActivatorNodeRef} {...listeners} className="shrink-0">
+      <span
+        ref={setActivatorNodeRef}
+        {...listeners}
+        className={cn("shrink-0", {
+          "opacity-30 pointer-events-none": !!highlight,
+        })}
+      >
         <GripVertical className="size-5 opacity-30 hover:opacity-80 transition-opacity cursor-grab" />
       </span>
 
@@ -58,7 +66,7 @@ export const TripDayItem = ({
         <span className="font-medium text-sm">{item.title}</span>
       </div>
 
-      <TripDayItemActions itemData={item} />
+      <TripDayItemActions disabled={!!highlight} itemData={item} />
     </div>
   );
 };
