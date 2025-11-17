@@ -1,3 +1,4 @@
+import { useMutateTripHighlights } from "../hooks/use-mutate-trip-highlights";
 import { useOpenTripItemEditDialog } from "../hooks/use-open-trip-item-edit-dialog";
 import { UpdateTripItemForm } from "./update-trip-item-form";
 import {
@@ -11,12 +12,23 @@ import {
 export const TripDayItemEditDialog = () => {
   const { tripItem, closeTripItemEditDialog } = useOpenTripItemEditDialog();
 
+  const { deleteHighlight } = useMutateTripHighlights();
+
+  const handleCloseDialog = () => {
+    closeTripItemEditDialog();
+    if (!tripItem) return;
+    deleteHighlight({
+      tripId: tripItem.trip,
+      payload: { dayItem: tripItem._id },
+    });
+  };
+
   return (
     <Dialog
       open={!!tripItem}
       onOpenChange={(open) => {
         if (open) return;
-        closeTripItemEditDialog();
+        handleCloseDialog();
       }}
     >
       <DialogContent className="sm:max-w-[620px]">
@@ -29,7 +41,7 @@ export const TripDayItemEditDialog = () => {
 
         <UpdateTripItemForm
           initialTripItemData={tripItem}
-          onUpdate={closeTripItemEditDialog}
+          onUpdate={handleCloseDialog}
         />
       </DialogContent>
     </Dialog>

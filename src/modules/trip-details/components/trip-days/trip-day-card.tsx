@@ -2,6 +2,7 @@ import { useDroppable } from "@dnd-kit/core";
 import { ArrowDownFromLine } from "lucide-react";
 import { CreateTripItemModal } from "../create-trip-item-modal";
 
+import { useTripHighlights } from "../../hooks/use-trip-highlights";
 import { TripDayItem } from "./trip-day-item";
 import type { TripItem } from "../../hooks/use-days-with-items";
 import {
@@ -10,6 +11,7 @@ import {
 } from "@/modules/trip-details/utils/date-utils";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Highlight } from "@/components/highlight";
 
 export const TripDayCard = ({
   dayKey,
@@ -26,6 +28,17 @@ export const TripDayCard = ({
   isOutside?: boolean;
   items: Array<TripItem>;
 }) => {
+  const highlights = useTripHighlights();
+
+  const thisDayHighlights = highlights?.filter((h) => h.dayKey === dayKey);
+
+  const dayHighlight = thisDayHighlights?.length
+    ? {
+        name: thisDayHighlights.map((h) => h.name).join(", "),
+        color: thisDayHighlights[0].color,
+      }
+    : undefined;
+
   const { isOver, setNodeRef, active } = useDroppable({
     id: `trip-day-${dayKey}`,
     data: { dayKey },
@@ -45,8 +58,10 @@ export const TripDayCard = ({
   return (
     <div
       ref={setNodeRef}
-      className={cn("bg-card transition-transform shadow-xl rounded-xl p-4")}
+      className="relative bg-card transition-transform shadow-xl rounded-xl p-4"
     >
+      <Highlight data={dayHighlight} rounded="xl" />
+
       {isOutside && (
         <Badge variant="warning" className="mb-4 font-semibold">
           Day outside your trip dates
@@ -66,9 +81,27 @@ export const TripDayCard = ({
           "mb-3": !!items.length,
         })}
       >
-        {items.map((item) => (
-          <TripDayItem key={item._id} day={dayKey} item={item} />
-        ))}
+        {items.map((item) => {
+          const dayItemHighlights = highlights?.filter(
+            (h) => h.dayItem === item._id,
+          );
+
+          const dayItemHighlight = dayItemHighlights?.length
+            ? {
+                name: dayItemHighlights.map((h) => h.name).join(", "),
+                color: dayItemHighlights[0].color,
+              }
+            : undefined;
+
+          return (
+            <TripDayItem
+              key={item._id}
+              day={dayKey}
+              item={item}
+              highlight={dayItemHighlight}
+            />
+          );
+        })}
 
         <div
           className={cn(

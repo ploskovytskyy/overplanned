@@ -109,6 +109,7 @@ export const members = query({
           name: user.name,
           image: user.image,
           role: member.role,
+          color: member.color,
         },
       ];
     });

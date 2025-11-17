@@ -12,6 +12,7 @@ import { api } from "convex/_generated/api";
 import { useParams } from "@tanstack/react-router";
 import { useOpenTripItemRemoveAlert } from "../../hooks/use-open-trip-item-remove-alert";
 import { useOpenTripItemEditDialog } from "../../hooks/use-open-trip-item-edit-dialog";
+import { useMutateTripHighlights } from "../../hooks/use-mutate-trip-highlights";
 import type { TripItem } from "../../hooks/use-days-with-items";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Button } from "@/components/ui/button";
@@ -31,13 +32,23 @@ export const TripDayItemActions = ({ itemData }: { itemData: TripItem }) => {
     (store) => store.openTripItemRemoveAlert,
   );
 
-  const openUpdateAlert = useOpenTripItemEditDialog(
+  const openUpdateDialog = useOpenTripItemEditDialog(
     (store) => store.openTripItemEditDialog,
   );
 
   const { mutate: duplicateItem, isPending: isDuplicatePending } = useMutation({
     mutationFn: useConvexMutation(api.tripItems.duplicateTripItem),
   });
+
+  const { createHighlight } = useMutateTripHighlights();
+
+  const handleOpenModal = () => {
+    openUpdateDialog(itemData);
+    createHighlight({
+      tripId,
+      payload: { dayItem: itemData._id, element: "day_item" },
+    });
+  };
 
   return (
     <>
@@ -62,7 +73,7 @@ export const TripDayItemActions = ({ itemData }: { itemData: TripItem }) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuGroup>
-              <DropdownMenuItem onSelect={() => openUpdateAlert(itemData)}>
+              <DropdownMenuItem onSelect={handleOpenModal}>
                 <Pencil />
                 Edit
               </DropdownMenuItem>

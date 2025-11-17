@@ -25,5 +25,5 @@ export async function ensureUserTrip(ctx: QueryCtx, tripId: string) {
     throw new ConvexError("NotFound");
   }
 
-  return { ...trip, role: userTrip.role };
+  return { ...trip, role: userTrip.role, membershipId: userTrip._id };
 }

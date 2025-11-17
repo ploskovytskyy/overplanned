@@ -1,4 +1,5 @@
 import { ConvexError, v } from "convex/values";
+import { getRandomColor } from "../src/lib/colors";
 import { mutation, query } from "./_generated/server";
 import { ensureUserTrip } from "./_helpers/ensureUserTrip";
 import { ensureUserId } from "./_helpers/ensureUserId";
@@ -52,6 +53,7 @@ export const acceptInvite = mutation({
       user,
       trip: invite.trip,
       role: invite.initialRole,
+      color: getRandomColor(),
     });
 
     if (invite.user) {

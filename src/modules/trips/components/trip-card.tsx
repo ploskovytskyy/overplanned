@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Calendar, MoreHorizontal } from "lucide-react";
+import { Calendar } from "lucide-react";
 import type { Doc } from "convex/_generated/dataModel";
 import { formatDateShort } from "@/modules/trip-details/utils/date-utils";
-import { Button } from "@/components/ui/button";
 
 export const TripCard = ({ trip }: { trip: Doc<"trips"> }) => {
   const dateLabel =
@@ -24,9 +23,9 @@ export const TripCard = ({ trip }: { trip: Doc<"trips"> }) => {
         <span className="font-semibold">{trip.name}</span>
       </div>
 
-      <Button variant="outline" size="icon-sm" disabled>
+      {/* <Button variant="outline" size="icon-sm" disabled>
         <MoreHorizontal className="size-4" />
-      </Button>
+      </Button>*/}
     </Link>
   );
 };

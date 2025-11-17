@@ -4,8 +4,17 @@ import { TripItemIcon } from "../trip-item-icon";
 import { formatDayItemTime, formatDuration } from "../../utils/date-utils";
 import { TripDayItemActions } from "./trip-day-item-actions";
 import type { TripItem } from "../../hooks/use-days-with-items";
+import { Highlight } from "@/components/highlight";
 
-export const TripDayItem = ({ item, day }: { item: TripItem; day: string }) => {
+export const TripDayItem = ({
+  item,
+  day,
+  highlight,
+}: {
+  item: TripItem;
+  day: string;
+  highlight?: { color: string; name: string };
+}) => {
   const { attributes, listeners, setNodeRef, transform, setActivatorNodeRef } =
     useDraggable({
       id: `trip-item-${item._id}`,
@@ -34,8 +43,10 @@ export const TripDayItem = ({ item, day }: { item: TripItem; day: string }) => {
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className="flex bg-card items-center px-2 py-2.5 shadow rounded"
+      className="relative flex bg-card items-center px-2 py-2.5 shadow rounded"
     >
+      <Highlight data={highlight} />
+
       <span ref={setActivatorNodeRef} {...listeners} className="shrink-0">
         <GripVertical className="size-5 opacity-30 hover:opacity-80 transition-opacity cursor-grab" />
       </span>

@@ -39,7 +39,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <header className="border-b sticky top-0 bg-background z-10">
-          <div className="h-16 container grid grid-cols-3 items-center">
+          <div className="h-16 container gap-4 grid grid-cols-[auto_1fr_1fr] md:grid-cols-3 items-center">
             <Link to="/" className="flex items-center gap-4">
               <Image
                 src={logoImage}
@@ -47,15 +47,23 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 height={50}
                 className="mix-blend-darken scale-125"
               />
-              <span className="font-bold text-lg justify-self-start">
+              <span className="hidden md:block font-bold text-lg justify-self-start">
                 overplanned
               </span>
             </Link>
-            <nav className="flex justify-self-center items-center gap-10">
-              <Link to="/create" activeProps={{ className: "underline" }}>
+            <nav className="flex justify-self-center items-center gap-5 md:gap-10">
+              <Link
+                to="/create"
+                activeProps={{ className: "underline" }}
+                className="shrink-0"
+              >
                 Create trip
               </Link>
-              <Link to="/trips" activeProps={{ className: "underline" }}>
+              <Link
+                to="/trips"
+                activeProps={{ className: "underline" }}
+                className="shrink-0"
+              >
                 My trips
               </Link>
             </nav>

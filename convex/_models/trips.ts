@@ -13,4 +13,5 @@ export const tripToUserModel = v.object({
   trip: v.id("trips"),
   user: v.id("users"),
   role: v.union(v.literal("owner"), v.literal("admin"), v.literal("member")),
+  color: v.optional(v.string()),
 });
