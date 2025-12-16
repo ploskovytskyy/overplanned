@@ -3,7 +3,7 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import viteTsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
-// import netlify from "@netlify/vite-plugin-tanstack-start";
+import netlify from "@netlify/vite-plugin-tanstack-start";
 import { devtools } from "@tanstack/devtools-vite";
 
 const config = defineConfig({
@@ -13,7 +13,7 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart(),
     viteReact(),
-    // netlify(),
+    netlify(),
   ],
 });
 
