@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_authed/trips/$tripId")({
 
 function RouteComponent() {
   return (
-    <div className="container max-w-3xl py-8">
+    <div className="container max-w-3xl py-6 md:py-8">
       <TripDetailsHeader />
       <TripDays />
       <TripDayItemRemoveAlert />

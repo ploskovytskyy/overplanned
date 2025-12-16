@@ -11,7 +11,7 @@ const tripTypeToImage = new Map(
 export const TripItemIcon = ({ icon }: { icon: TripType }) => {
   const image = tripTypeToImage.get(icon);
   return (
-    <div className="size-12 mr-4 ml-1.5 grid justify-center items-center shrink-0">
+    <div className="size-10 md:size-12 mr-4 ml-1.5 grid justify-center items-center shrink-0">
       {image ? (
         <Image
           src={image.icon}

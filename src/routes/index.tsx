@@ -14,9 +14,11 @@ export const Route = createFileRoute("/")({
 function App() {
   return (
     <section className="relative container min-h-page grid content-center justify-items-center">
-      <h1 className="text-5xl font-bold mb-6">overplanned</h1>
+      <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
+        overplanned
+      </h1>
 
-      <div className="max-w-lg text-center text-lg mb-5">
+      <div className="max-w-lg text-center text-sm md:text-lg mb-5">
         Simplify your trip planning, invite friends, and build your plans with
         ease.
       </div>

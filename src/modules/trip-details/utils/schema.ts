@@ -32,6 +32,7 @@ export const updateTripItemFormSchema = createTripItemFormSchema.pick({
   title: true,
   time: true,
   url: true,
+  type: true,
 });
 
 export type UpdateTripItemFormSchema = z.infer<typeof updateTripItemFormSchema>;

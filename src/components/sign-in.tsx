@@ -1,7 +1,9 @@
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useConvexAuth } from "convex/react";
 import { useNavigate } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 import { Button } from "@/components/ui/button";
+import githubLogo from "@/assets/github-mark.svg";
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -23,7 +25,8 @@ export const SignIn = () => {
 
   return (
     <Button disabled={isLoading} onClick={() => signIn("github")}>
-      Sign in with GitHub
+      <Image src={githubLogo} width={12} height={12} className="invert" />
+      Sign in
     </Button>
   );
 };

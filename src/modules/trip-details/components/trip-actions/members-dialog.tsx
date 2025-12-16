@@ -63,14 +63,17 @@ export const MembersDialog = ({ trigger }: { trigger: React.ReactNode }) => {
 
           <div className="space-y-4">
             {members.map((member) => (
-              <div key={member.id} className="flex gap-4 items-center">
-                <UserAvatar user={member} className="size-10" />
+              <div
+                key={member.id}
+                className="flex gap-2 md:gap-4 items-center "
+              >
+                <UserAvatar user={member} className="size-8 md:size-10" />
 
                 <div className="grid">
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
                     {member.name ?? "No name"} ({member.role})
                   </span>
-                  <span className="text-sm opacity-50">
+                  <span className="text-sm opacity-50 font-medium max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
                     {member.email ?? "-"}
                   </span>
                 </div>

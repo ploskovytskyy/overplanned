@@ -19,7 +19,7 @@ export const TripDetailsHeader = () => {
   //     : `${data.minPeople}-${data.maxPeople} people`;
 
   return (
-    <div className="grid gap-3 mb-8">
+    <div className="grid gap-3 mb-6 md:mb-8">
       <div className="flex text-sm gap-10 opacity-60 font-medium">
         <span className="flex items-center gap-2">
           <Calendar className="size-4" />
@@ -31,8 +31,8 @@ export const TripDetailsHeader = () => {
           </span>*/}
       </div>
 
-      <div className="flex items-center gap-5 justify-between">
-        <h1 className="text-3xl font-bold">{data.name}</h1>
+      <div className="grid md:flex items-center gap-2 md:gap-5 justify-between">
+        <h1 className="text-lg md:text-3xl font-bold">{data.name}</h1>
         <TripActions />
       </div>
     </div>

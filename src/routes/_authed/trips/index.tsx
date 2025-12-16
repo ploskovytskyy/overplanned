@@ -20,20 +20,20 @@ function RouteComponent() {
   if (!trips.length) return <EmptyTrips />;
 
   return (
-    <div className="container max-w-3xl py-10">
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="flex items-center gap-3 font-bold text-3xl">
+    <div className="container max-w-3xl py-6 md:py-10">
+      <div className="flex items-center justify-between mb-6 md:mb-10">
+        <h1 className="flex items-center gap-3 font-bold text-xl md:text-3xl">
           <Image
             src={activityIcon}
             width={60}
             height={60}
-            className="mix-blend-darken"
+            className="mix-blend-darken w-[50px] md:w-[60px]"
           />
           My Trips
         </h1>
         <Button variant="outline" asChild>
           <Link to="/create">
-            <Plus /> Add new trip
+            <Plus /> New trip
           </Link>
         </Button>
       </div>

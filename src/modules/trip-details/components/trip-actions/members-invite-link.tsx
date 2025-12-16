@@ -42,7 +42,7 @@ export const MembersInviteLink = () => {
   const invoteUrl = `${APP_URL}/invite/${firstLink._id}`;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="grid md:flex items-center gap-2">
       <Input readOnly value={invoteUrl} />
       <Button
         size="sm"

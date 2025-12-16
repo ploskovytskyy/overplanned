@@ -4,6 +4,7 @@ import { useUpdateTripItem } from "../hooks/use-update-trip-item";
 import { Title } from "./create-trip-item-form/title";
 import { Time } from "./create-trip-item-form/time";
 import { Url } from "./create-trip-item-form/url";
+import { TypeToggleGroup } from "./create-trip-item-form/type-toggle-group";
 import type { TripItem } from "../hooks/use-days-with-items";
 import { Separator } from "@/components/ui/separator";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
@@ -25,6 +26,7 @@ export const UpdateTripItemForm = ({
 
   const form = useForm({
     defaultValues: {
+      type: tripItem?.type ?? "",
       title: tripItem?.title ?? "",
       time: {
         startTime: `${startHours}:${startMinutes}`,
@@ -53,6 +55,16 @@ export const UpdateTripItemForm = ({
           form.handleSubmit();
         }}
       >
+        <form.Field
+          name="type"
+          children={(field) => (
+            <TypeToggleGroup
+              selectedType={field.state.value}
+              onTypeChange={field.handleChange}
+            />
+          )}
+        />
+
         <form.Field
           name="title"
           children={(field) => (

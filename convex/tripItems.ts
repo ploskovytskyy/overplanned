@@ -65,6 +65,7 @@ export const updateTripItem = mutation({
       startDate: tripItemsModel.fields.startDate,
       endDate: tripItemsModel.fields.endDate,
       url: tripItemsModel.fields.url,
+      type: tripItemsModel.fields.type,
     }),
   },
   handler: async (ctx, args) => {
@@ -85,6 +86,7 @@ export const updateTripItem = mutation({
       startDate: args.payload.startDate,
       endDate: args.payload.endDate,
       url: args.payload.url,
+      type: args.payload.type,
     });
   },
 });

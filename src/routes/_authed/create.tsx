@@ -102,7 +102,9 @@ function RouteComponent() {
   return (
     <div className="container max-w-xl py-22">
       <div className="text-center mb-12">
-        <h1 className="text-2xl font-bold mb-2">Start you trip today 🌴</h1>
+        <h1 className="text-xl md:text-2xl font-bold mb-2">
+          Start you trip today 🌴
+        </h1>
         <p className="text-sm opacity-50">{descriptions[step]}</p>
       </div>
 

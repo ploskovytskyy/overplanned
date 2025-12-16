@@ -62,7 +62,7 @@ export const TripDayItem = ({
       <TripItemIcon icon={item.type} />
 
       <div className="grid gap-0.5 mr-2">
-        <span className="text-sm">{timeLabel}</span>
+        <span className="text-xs md:text-sm">{timeLabel}</span>
         <span className="font-medium text-sm">{item.title}</span>
       </div>
 

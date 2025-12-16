@@ -12,7 +12,13 @@ export const TypeToggleGroup = ({
   selectedType: string;
   onTypeChange: (value: string) => void;
 }) => {
-  const [selectedGroup, setSelectedGroup] = useState("Activity");
+  const [selectedGroup, setSelectedGroup] = useState(() => {
+    const selectedGroupData = Object.entries(typeGroups).find(
+      ([_groupKey, groupData]) =>
+        Object.keys(groupData.types).find((key) => key === selectedType),
+    );
+    return selectedGroupData ? selectedGroupData[0] : "Activity";
+  });
 
   const selectedGroupTypes = typeGroups[selectedGroup].types;
 
@@ -50,7 +56,7 @@ export const TypeToggleGroup = ({
                 src={group.thumbnail}
                 className="mix-blend-darken"
               />
-              {groupKey}
+              <span className="hidden md:block">{groupKey}</span>
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
@@ -77,7 +83,7 @@ export const TypeToggleGroup = ({
                 src={type.icon}
                 className="mix-blend-darken"
               />
-              {type.label}
+              <span className="hidden md:block">{type.label}</span>
             </ToggleGroupItem>
           ))}
         </ToggleGroup>

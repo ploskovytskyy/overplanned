@@ -50,7 +50,10 @@ export const CreateTripItemModal = ({ day }: { day: string }) => {
             New item
           </DialogTitle>
         </DialogHeader>
-        <CreateTripItemForm day={day} onCreate={() => setOpen(false)} />
+        <CreateTripItemForm
+          day={day}
+          onCreate={() => handleOpenChange(false)}
+        />
       </DialogContent>
     </Dialog>
   );

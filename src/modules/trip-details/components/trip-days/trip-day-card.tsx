@@ -68,10 +68,10 @@ export const TripDayCard = ({
         </Badge>
       )}
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-xl font-bold flex items-center gap-2.5">
+        <h2 className="text-lg md:text-xl font-bold flex items-center gap-2.5">
           {weekday} <Badge variant="secondary">{formattedDay}</Badge>
         </h2>
-        <span className="opacity-60 text-sm">{dayIndexLabel}</span>
+        <span className="opacity-60 text-xs md:text-sm">{dayIndexLabel}</span>
       </div>
 
       <div

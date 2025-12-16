@@ -4,6 +4,7 @@ import { api } from "convex/_generated/api";
 import { toast } from "sonner";
 import { useParams } from "@tanstack/react-router";
 import { format, setHours, setMinutes } from "date-fns";
+import type { TripType } from "../utils/trip-type-utils";
 import type { UpdateTripItemFormSchema } from "../utils/schema";
 
 export const useUpdateTripItem = ({ onUpdate }: { onUpdate: () => void }) => {
@@ -49,6 +50,7 @@ export const useUpdateTripItem = ({ onUpdate }: { onUpdate: () => void }) => {
         startDate,
         endDate,
         url: payload.url,
+        type: payload.type as TripType,
       },
     });
   };

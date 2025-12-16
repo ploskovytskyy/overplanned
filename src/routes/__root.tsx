@@ -37,7 +37,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="min-w-[375px]">
         <header className="border-b sticky top-0 bg-background z-10">
           <div className="h-16 container gap-4 grid grid-cols-[auto_1fr_1fr] md:grid-cols-3 items-center">
             <Link to="/" className="flex items-center gap-4">
@@ -51,11 +51,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 overplanned
               </span>
             </Link>
-            <nav className="flex justify-self-center items-center gap-5 md:gap-10">
+            <nav className="flex md:justify-self-center items-center gap-5 md:gap-10">
               <Link
                 to="/create"
                 activeProps={{ className: "underline" }}
-                className="shrink-0"
+                className="shrink-0 hidden md:block"
               >
                 Create trip
               </Link>
